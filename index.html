@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlimited AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css?v=3">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div id="app">
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrap">
+                    <div class="logo-icon"><i data-lucide="sparkles"></i></div>
+                    <h1>Unlimited AI</h1>
+                </div>
+                <button id="sidebar-close" class="btn-icon mobile-only" type="button" title="Close menu">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-header">
+                    <i data-lucide="zap"></i>
+                    <span>Quick Chat</span>
+                </div>
+                <input type="text" id="model-search" placeholder="Search models..." autocomplete="off">
+            </div>
+
+            <div id="model-list" class="model-list"></div>
+
+            <div class="sidebar-section" id="merge-section">
+                <div class="sidebar-section-header">
+                    <i data-lucide="circle-check"></i>
+                    <span>Unlimited Merge AI</span>
+                    <span class="mode-toggle" id="merge-toggle">OFF</span>
+                </div>
+                <div class="mode-desc" id="merge-desc">Combines GPT-5.5, Claude Opus 4.7, and Gemini 2.5 Pro, then synthesizes the best answer.</div>
+            </div>
+
+            <div class="sidebar-section" id="search-section">
+                <div class="sidebar-section-header">
+                    <i data-lucide="search"></i>
+                    <span>Web Search</span>
+                    <span class="mode-toggle" id="search-toggle">OFF</span>
+                </div>
+                <div class="mode-desc" id="search-desc">Searches the web and answers with source citations.</div>
+            </div>
+
+            <div id="chat-list"></div>
+
+            <div class="sidebar-footer">
+                <button id="new-chat-btn" class="btn-primary" type="button">
+                    <i data-lucide="plus"></i>
+                    <span>New Chat</span>
+                </button>
+            </div>
+        </aside>
+
+        <div id="sidebar-overlay" class="mobile-only"></div>
+
+        <main id="main">
+            <header id="chat-header">
+                <button id="sidebar-toggle" class="btn-icon mobile-only" type="button" title="Open menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div id="header-model-badge"></div>
+                <div id="chat-title">Unlimited AI</div>
+                <button id="api-docs-btn" class="api-docs-btn" type="button" title="API docs">
+                    <i data-lucide="book-open"></i>
+                    <span>API Docs</span>
+                    <span id="api-remaining-pill">...</span>
+                </button>
+                <button id="theme-toggle" class="btn-icon" type="button" title="Toggle theme">
+                    <i data-lucide="sun"></i>
+                </button>
+            </header>
+
+            <section id="messages"></section>
+
+            <section id="input-area">
+                <div class="input-wrap">
+                    <div class="input-model-dot" id="input-model-dot"></div>
+                    <textarea id="user-input" placeholder="Message GPT-5..." rows="1"></textarea>
+                    <button id="stop-btn" class="btn-stop hidden" type="button" title="Stop">
+                        <i data-lucide="square"></i>
+                    </button>
+                    <button id="send-btn" class="btn-send" type="button" title="Send">
+                        <i data-lucide="send-horizontal"></i>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span class="input-status" id="input-status"></span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="api-modal" class="api-modal hidden" role="dialog" aria-modal="true" aria-labelledby="api-modal-title">
+        <div class="api-modal-backdrop" data-api-close></div>
+        <div class="api-modal-panel">
+            <div class="api-modal-header">
+                <div>
+                    <h2 id="api-modal-title">API Docs</h2>
+                    <p>One auth key per IP. Limit: 200 AI messages total.</p>
+                </div>
+                <button id="api-modal-close" class="btn-icon" type="button" title="Close docs">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div class="api-key-box">
+                <div class="api-label">Your auth key</div>
+                <div class="api-key-row">
+                    <code id="api-key-value">Loading...</code>
+                    <button id="copy-api-key-btn" class="code-copy" type="button">Copy</button>
+                </div>
+                <div class="api-usage" id="api-usage-text">Checking usage...</div>
+            </div>
+
+            <div class="api-doc-grid">
+                <section class="api-doc-section">
+                    <h3>1. Get your key</h3>
+                    <pre><code id="api-key-example"></code></pre>
+                </section>
+                <section class="api-doc-section">
+                    <h3>2. Chat with any model</h3>
+                    <pre><code id="api-chat-example"></code></pre>
+                </section>
+                <section class="api-doc-section">
+                    <h3>3. Web search</h3>
+                    <pre><code id="api-search-example"></code></pre>
+                </section>
+                <section class="api-doc-section">
+                    <h3>4. Merge AI</h3>
+                    <pre><code id="api-merge-example"></code></pre>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="bg-canvas"></canvas>
+    <div id="toast-container"></div>
+    <script src="app.js?v=3"></script>
+</body>
+
+</html>
